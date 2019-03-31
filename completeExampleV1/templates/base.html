@@ -1,0 +1,28 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Blog WebApp</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+  <h1><a href="/index">Blog WebApp</a></h1>
+
+    {% if g.user %}
+      Welcome {{ g.user[1] }}!
+      <ul>
+      <li><a href="/logout">Log Out</a></li>
+      </ul>
+    {% else %}
+  <ul>      
+      <li><a href="/register">Register</a>
+      <li><a href="/login">Log In</a>
+    {% endif %}
+  </ul>
+</nav>
+      <hr>
+<section class = "content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class = "flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
