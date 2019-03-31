@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Posts features{% endblock %}</h1>
+  {% if g.user %}
+    <a class = "action" href="/create">Create a new post</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+    <article class="post">
+          <header>
+              <div>
+          <h1>{{ post[3] }}</h1>
+          <div class = "about">by {{ post[0] }} on {{ post[2].strftime('%Y-%m-%d') }}</div>
+        </div>
+        {% if g.user[1] == post[0] %}
+        <a class = "action" href="{{ url_for('update', id=post[1]) }}">Edit</a>
+        {% endif %}
+      </header>
+      <p class = "body">{{ post[4] }}</p>
+    {% if not loop.last %}
+    </article>
+        {% if not loop.last %}
+      <hr>
+    {% endif %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
